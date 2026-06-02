@@ -6,16 +6,20 @@ let scrollLeft;
 
 slider.addEventListener('mousedown', (e) => {
   isDown = true;
-  startX = e.pageX;
-  scrollLeft = slider.scrollLeft;
-});
+  slider.classList.add('active');
 
-slider.addEventListener('mouseup', () => {
-  isDown = false;
+  startX = e.pageX - slider.offsetLeft;
+  scrollLeft = slider.scrollLeft;
 });
 
 slider.addEventListener('mouseleave', () => {
   isDown = false;
+  slider.classList.remove('active');
+});
+
+slider.addEventListener('mouseup', () => {
+  isDown = false;
+  slider.classList.remove('active');
 });
 
 slider.addEventListener('mousemove', (e) => {
@@ -23,6 +27,8 @@ slider.addEventListener('mousemove', (e) => {
 
   e.preventDefault();
 
-  const walk = e.pageX - startX;
+  const x = e.pageX - slider.offsetLeft;
+  const walk = (x - startX) * 3;
+
   slider.scrollLeft = scrollLeft - walk;
 });
